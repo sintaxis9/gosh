@@ -96,24 +96,3 @@ func Rm(args []string) {
 
 	fmt.Printf("file removed: %s\n", path)
 }
-
-func Ls(args []string) {
-	path := "."
-	if len(args) > 0 {
-		path = args[0]
-	}
-
-	entries, err := os.ReadDir(path)
-	if err != nil {
-		fmt.Printf("error reading directory %s: %v\n", path, err)
-		return
-	}
-
-	for _, entry := range entries {
-		if entry.IsDir() {
-			fmt.Printf("[DIR] %s\n", entry.Name())
-		} else {
-			fmt.Printf("[FILE] %s\n", entry.Name())
-		}
-	}
-}
