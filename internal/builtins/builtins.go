@@ -5,9 +5,10 @@ import (
 	"os/exec"
 	"runtime"
 
+	"github.com/sintaxis9/gosh/internal/builtins/commands/fs"
+	"github.com/sintaxis9/gosh/internal/builtins/commands/mathcmd"
 	"github.com/sintaxis9/gosh/internal/builtins/commands/notes"
-	"github.com/sintaxis9/gosh/internal/filesystem"
-	"github.com/sintaxis9/gosh/internal/system"
+	"github.com/sintaxis9/gosh/internal/builtins/commands/system"
 )
 
 func Exit(args []string) {
@@ -27,26 +28,26 @@ func Clear(args []string) {
 }
 
 var Commands = map[string]func(args []string){
-	//DEFAULT
+	// DEFAULT
 	"exit":  Exit,
 	"clear": Clear,
 
-	//FILESYSTEM
-	"cd":    filesystem.Cd,
-	"ls":    filesystem.Ls,
-	"mkdir": filesystem.Mkdir,
-	"rmdir": filesystem.Rmdir,
-	"touch": filesystem.Touch,
-	"rm":    filesystem.Rm,
+	// FILESYSTEM
+	"cd":    fs.Cd,
+	"ls":    fs.Ls,
+	"mkdir": fs.Mkdir,
+	"rmdir": fs.Rmdir,
+	"touch": fs.Touch,
+	"rm":    fs.Rm,
 
-	//SYSTEM
+	// SYSTEM
 	"sysinfo": system.Sysinfo,
 
-	//NOTES
+	// NOTES
 	"newnote":  notes.NewNote,
 	"shownote": notes.ShowNote,
 	"delnote":  notes.DelNote,
 
-	//MATH
-	"math": Math,
+	// MATH
+	"math": mathcmd.Math,
 }

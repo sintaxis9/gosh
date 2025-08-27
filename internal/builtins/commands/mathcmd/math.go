@@ -1,4 +1,4 @@
-package builtins
+package mathcmd
 
 import (
 	"fmt"
