@@ -20,3 +20,100 @@ func Cd(args []string) {
 		fmt.Println("cd error:", err)
 	}
 }
+
+func Mkdir(args []string) {
+	if len(args) != 1 {
+		fmt.Println("usage: mkdir <folder_path>")
+		return
+	}
+
+	path := args[0]
+	err := os.MkdirAll(path, 0755)
+	if err != nil {
+		fmt.Printf("error creating folder %s: %v\n", path, err)
+		return
+	}
+
+	fmt.Printf("folder created: %s\n", path)
+}
+
+func Rmdir(args []string) {
+	if len(args) != 1 {
+		fmt.Println("usage: rmdir <folder_path>")
+		return
+	}
+
+	path := args[0]
+	err := os.RemoveAll(path)
+	if err != nil {
+		fmt.Printf("error removing folder %s: %v\n", path, err)
+		return
+	}
+
+	fmt.Printf("folder removed: %s\n", path)
+}
+
+func Touch(args []string) {
+	if len(args) != 1 {
+		fmt.Println("usage: touch <file_path>")
+		return
+	}
+
+	path := args[0]
+	f, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Printf("error creating file %s: %v\n", path, err)
+		return
+	}
+	defer f.Close()
+
+	fmt.Printf("file created: %s\n", path)
+}
+
+func Rm(args []string) {
+	if len(args) != 1 {
+		fmt.Println("usage: rm <file_path>")
+		return
+	}
+
+	path := args[0]
+	info, err := os.Stat(path)
+	if err != nil {
+		fmt.Printf("error accesing file %s: %v\n", path, err)
+		return
+	}
+
+	if info.IsDir() {
+		fmt.Printf("%s is a dir, instead use rmdir to remove it!\n", path)
+		return
+	}
+
+	err = os.Remove(path)
+	if err != nil {
+		fmt.Printf("error removing file %s: %v\n", path, err)
+		return
+	}
+
+	fmt.Printf("file removed: %s\n", path)
+}
+
+func Ls(args []string) {
+	path := "."
+	if len(args) > 0 {
+		path = args[0]
+	}
+
+	entries, err := os.ReadDir(path)
+	if err != nil {
+		fmt.Printf("error reading directory %s: %v\n", path, err)
+		return
+	}
+
+	for _, entry := range entries {
+		if entry.IsDir() {
+			fmt.Printf("[DIR] %s\n", entry.Name())
+		} else {
+			fmt.Printf("[FILE] %s\n", entry.Name())
+		}
+	}
+}
