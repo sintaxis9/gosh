@@ -27,16 +27,26 @@ func Clear(args []string) {
 }
 
 var Commands = map[string]func(args []string){
-	"exit":     Exit,
-	"clear":    Clear,
-	"cd":       filesystem.Cd,
-	"ls":       filesystem.Ls,
-	"mkdir":    filesystem.Mkdir,
-	"rmdir":    filesystem.Rmdir,
-	"touch":    filesystem.Touch,
-	"rm":       filesystem.Rm,
-	"sysinfo":  system.Sysinfo,
+	//DEFAULT
+	"exit":  Exit,
+	"clear": Clear,
+
+	//FILESYSTEM
+	"cd":    filesystem.Cd,
+	"ls":    filesystem.Ls,
+	"mkdir": filesystem.Mkdir,
+	"rmdir": filesystem.Rmdir,
+	"touch": filesystem.Touch,
+	"rm":    filesystem.Rm,
+
+	//SYSTEM
+	"sysinfo": system.Sysinfo,
+
+	//NOTES
 	"newnote":  notes.NewNote,
 	"shownote": notes.ShowNote,
 	"delnote":  notes.DelNote,
+
+	//MATH
+	"math": Math,
 }
