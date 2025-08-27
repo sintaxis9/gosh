@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/sintaxis9/gosh/internal/parser"
 )
 
 type Shell struct {
@@ -27,7 +29,7 @@ func (s *Shell) Run() {
 
 		line, err := reader.ReadString('\n')
 		if err != nil {
-			fmt.Println("Error leyendo entrada:", err)
+			fmt.Println("reading input error:", err)
 			return
 		}
 
@@ -36,9 +38,15 @@ func (s *Shell) Run() {
 			continue
 		}
 
-		tokens := strings.Fields(line)
-		cmd := tokens[0]
-		args := tokens[1:]
+		cmd, args, err := parser.ParseCommand(line)
+		if err != nil {
+			fmt.Println("error parsing command:", err)
+			continue
+		}
+
+		if cmd == "" {
+			continue
+		}
 
 		if cmdFunc, ok := s.Commands[cmd]; ok {
 			cmdFunc(args)
