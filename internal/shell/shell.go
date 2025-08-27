@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/sintaxis9/gosh/internal/parser"
+	"github.com/sintaxis9/gosh/internal/plugins"
 )
 
 type Shell struct {
@@ -51,7 +52,12 @@ func (s *Shell) Run() {
 		if cmdFunc, ok := s.Commands[cmd]; ok {
 			cmdFunc(args)
 		} else {
-			fmt.Println("wth that command:", cmd)
+			if plugin, ok := plugins.Get(cmd); ok {
+				plugin.Run(args)
+			} else {
+				fmt.Println("wth that command:", cmd)
+			}
 		}
+
 	}
 }
